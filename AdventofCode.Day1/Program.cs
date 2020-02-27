@@ -10,7 +10,7 @@ namespace AdventofCode.Day1
         public static void Main(string[] args)
         {
             var totalAmountOfFuelRequired = ReadFileAndSumValues();
-            Console.WriteLine(totalAmountOfFuelRequired);
+            Console.WriteLine("The total amount of fuel required is " + totalAmountOfFuelRequired + " units");
         }
 
         private static int ReadFileAndSumValues()
@@ -19,20 +19,18 @@ namespace AdventofCode.Day1
 
             try
             {
-                using (StreamReader sr = new StreamReader(string.Concat(filePath, fileName)))
+                using var sr = new StreamReader(string.Concat(filePath, fileName));
+                string line;
+                while ((line = sr.ReadLine()) != null)
                 {
-                    string line;
-                    while ((line = sr.ReadLine()) != null)
+                    try
                     {
-                        try
-                        {
-                            var moduleMass = decimal.Parse(line);
-                            totalAmountOfFuel += CalculateRequiredFuel(moduleMass);
-                        }
-                        catch (FormatException)
-                        {
-                            Console.WriteLine($"Unable to parse '{line}'");
-                        }
+                        var moduleMass = decimal.Parse(line);
+                        totalAmountOfFuel += CalculateRequiredFuel(moduleMass);
+                    }
+                    catch (FormatException)
+                    {
+                        Console.WriteLine($"Unable to parse '{line}'");
                     }
                 }
             }
